@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  ray_api:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+    restart: always
