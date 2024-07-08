@@ -4,7 +4,7 @@
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/ray_based_api_project.git
+    git clone [https://github.com/yourusername/ray_based_api_project.git](https://github.com/Echo9k/mock_API.git)
     cd ray_based_api_project
     ```
 
