@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ray-based-api-deployment
+  name: ray_based_api_project
 spec:
   replicas: 1
   selector:
