@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ray-based-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ray-based-api
+  template:
+    metadata:
+      labels:
+        app: ray-based-api
+    spec:
+      containers:
+      - name: ray-based-api
+        image: mypepacr.azurecr.io/ray_based_api_project:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "1"
+          requests:
+            memory: "500Mi"
+            cpu: "0.5"

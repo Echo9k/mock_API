@@ -4,11 +4,15 @@ import ray
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-ray.init()
+
+# Initialize Ray with appropriate resources
+ray.init(
+    _memory=2 * 1024 * 1024 * 1024,  # 2GB memory
+    object_store_memory=512 * 1024 * 1024  # 512MB object store memory
+)
 
 @ray.remote
-def process_request(data, is_accepted=None, seed=None):
-    # Simulate processing logic
+def process_request(data, is_accepted=True, seed=42):
     response = {
         "status": "Done",
         "document_id": "string",
@@ -46,10 +50,9 @@ def process_request(data, is_accepted=None, seed=None):
             "BarcodeBlurValue": 73.33854939656592
         }
     }
-    
-    # Include the optional parameters if provided
+
     if is_accepted is not None:
-        response['result']['Remark'] = "accepted" if is_accepted else "rejected"
+        response['result']['Remark'] = "accept" if is_accepted else "reject"
     if seed is not None:
         response['seed'] = seed
 
@@ -61,10 +64,9 @@ def api1():
     is_accepted = data.get('is_accepted')
     seed = data.get('seed')
 
-    # Use Ray to handle the request
     future = process_request.remote(data, is_accepted, seed)
     response = ray.get(future)
-    
+
     return jsonify(response)
 
 if __name__ == '__main__':
